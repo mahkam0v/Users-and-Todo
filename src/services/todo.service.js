@@ -2,7 +2,8 @@ import * as todoRepository from "../repositories/todo.repository.js"
 import * as userRepository from "../repositories/user.repository.js"
 
 export const getTodosByUser = async (userId) => {
-  const user = await userRepository.findById(userId)
+  // userRepository ichidagi nom bilan bir xil bo'lishi kerak
+  const user = await userRepository.findUserById(userId) 
   if (!user) {
     const error = new Error("User not found")
     error.statusCode = 404
@@ -12,7 +13,8 @@ export const getTodosByUser = async (userId) => {
 }
 
 export const getTodo = async (id) => {
-  const todo = await todoRepository.findById(id)
+  // Bu yerda foydalanuvchini emas, to'g'ridan-to'g'ri Todo-ni qidirish kerak
+  const todo = await todoRepository.findById(id) 
   if (!todo) {
     const error = new Error("Todo not found")
     error.statusCode = 404

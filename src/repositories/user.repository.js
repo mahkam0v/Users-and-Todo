@@ -1,21 +1,21 @@
-import {v4 as uuidv4 } from "uuid"
+import User from "../models/user.model.js"
 
-let users = []
-
-export const findAll = async () => {
-  return users
+export const findAllUsers = async () => {
+	return User.find()
 }
 
-export const findById = async (id) => {
-return users.find(user => user.id === id)
+export const findUserById = async (id) => {
+	return User.findById(id)
 }
 
-export const create = async (data) => {
-const newUser = {
-    id:uuidv4(),
-    ...data
-  }
+export const findUserByEmail = async (email) => {
+	return User.findOne({ email })
+}
 
-users.push(newUser)
-return newUser
+export const createUser = async (data) => {
+	return User.create(data)
+}
+
+export const deleteUserById = async (id) => {
+	return User.findByIdAndDelete(id)
 }

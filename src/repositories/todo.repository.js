@@ -1,34 +1,25 @@
-import { v4 as uuidv4 } from "uuid"
-
-let todos = []
+import Todo from "../models/todo.model.js";
 
 export const findAllByUserId = async (userId) => {
-  return todos.filter(todo => todo.userId === userId)
+  return await Todo.find({ userId: userId });
 }
 
 export const findById = async (id) => {
-  return todos.find(todo => todo.id === id)
+  return await Todo.findById(id);
 }
 
 export const create = async (userId, data) => {
-  const newTodo = {
-    id: uuidv4(),
-    userId,
+  const newTodo = new Todo({
+    userId: userId,
     ...data
-  }
-  todos.push(newTodo)
-  return newTodo
+  });
+  return await newTodo.save();
 }
 
 export const update = async (id, data) => {
-  const todo = todos.find(t => t.id === id)
-  if (!todo) return null
-  Object.assign(todo, data)
-  return todo
+  return await Todo.findByIdAndUpdate(id, data, { new: true });
 }
 
 export const remove = async (id) => {
-  const index = todos.findIndex(t => t.id === id)
-  if (index === -1) return null
-  return todos.splice(index, 1)[0]
+  return await Todo.findByIdAndDelete(id);
 }
